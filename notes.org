@@ -1,0 +1,133 @@
+* Application
+** Presentation title
+An efficient workflow for reproducible science
+** Author
+Bekolay, Trevor, University of Waterloo
+** Bio
+I am a second year PhD student in the computer science
+department at the University of Waterloo.
+I am part of the Computational Neuroscience Research Group,
+and coauthor on a Science paper in which we proposed
+the world's largest functional brain model.
+The paper garnered quite a bit of popular press coverage
+(e.g., http://www.nature.com/news/simulated-brain-scores-top-test-marks-1.11914).
+** Contact email
+tbekolay@gmail.com
+** Talk summary
+Every scientist should be able to regenerate the figures in a paper.
+However, all too often the correct version of a script goes missing,
+or the original raw data is filtered by hand
+and the filtering process undocumented,
+or the student who has the data or code has switched labs.
+
+In this talk, I will describe a workflow for
+a complete end-to-end analysis pipeline,
+going from raw data to analysis to plotting,
+using existing tools to make each step of the pipeline
+reproducible, documented, and efficient,
+while requiring few sacrifices in terms
+of a scientist's time and effort.
+
+The key insight is to decouple each analysis
+step and each plotting step,
+in order to do several analyses
+or plots in parallel.
+Each step can be cached if it is costly,
+with the code that produces the cached data
+serving as the documentation for how it is produced.
+
+I will discuss a way to organize code in order
+to make analyzing and plotting large data sets
+efficient, parallelizable, and cacheable.
+Once completed, source code can be uploaded to
+a hosting service like Github or Bitbucket,
+and data can be uploaded to a data store
+like Amazon S3 or figshare.
+The end result is that readers can
+completely regenerate the figures in your paper
+at no or nearly no cost to you.
+** Submission references
+The workflow that I will describe has been
+applied to a currently submitted paper
+(http://dl.dropbox.com/u/6182929/Bekolay-CogSci2013.pdf).
+The source code for that paper is available at
+https://github.com/tbekolay/cogsci2013
+and all of the data is available at
+http://figshare.com/authors/Trevor_Bekolay/98483.
+I have also applied this workflow to a paper that has
+not been submitted yet, but has more data and
+more complicated figures
+(http://dl.dropbox.com/u/6182929/Bekolay-Unsubmitted.pdf).
+The source and data for that will be released once the paper is submitted,
+but importantly, all the figures are generated
+from the raw data with no manual tweaking.
+
+I have given many talks in the past, including
+a recorded PyCon Canada talk in 2012
+(http://www.youtube.com/watch?v=QcN_Hmh88mA)
+and as an instructor at the University of Manitoba
+and the University of Waterloo
+(http://www.ratemyprofessors.com/ShowRatings.jsp?tid=1555733).
+** Submission type
+Talk only
+** Topic track
+Tools for reproducibility
+** Domain symposia
+None only submit to tracks
+* Talk
+** 1. Motivation
+- Goal: reproducibility
+  - That's hard when even recreatability is hard -- make that a goal
+- There are lots of different tools out there,
+  so a tool to do it all will be very tough.
+  - We're all programmers, and we're all going
+    to use our favorite tools
+- This is kind of a "Things I wish I'd known",
+  or a set of tips/rules for doing things right
+** 2. Review: the (pragmatic) scientific method
+- A simple view:
+  Expt
+              -> Data -> Plot -> Figures -> Paper
+  Simulation
+- A lot more goes into the experiment / simulation
+- But, a lot more goes into the right half too
+- Otherwise, you end up with:
+    def plot_for_paper(filename):
+        with open(filename) as f:
+             for line in f:
+                 # put data in data structures
+        # do analysis on those data structures
+        plt.plot(results)
+- Another view:
+  Expt          Data -> Analysis ->
+             -> Data -> Analysis -> Meta-analysis -> Plot -> Figures -> Paper
+  Simulation    Data -> Analysis ------------------> Plot
+- Why? So we can do the two things that CS does best: parallelize and cache
+  - Treat each step as distinct; we can parallelize analysis, meta-analysis,
+    plotting, figure generation, etc
+- How do we do that?
+** 3. Directory structure
+- When you start a new project, make a new directory
+  - You can copy some stuff over, but if you find yourself copying a lot
+    for every project, consider making an analysis package and releasing it
+- data(_sim|_expt)/ figures/ paper/ plots/ scripts/ run.py README
+  - You might change some of these, or add your own, but if everyone
+    did this it would be awesome
+- run.py is a driver program
+  - Kind of like a makefile for your paper
+** 4. Driver program
+- It should do each of these steps
+- Show a skeleton based on my run.py
+- Protip! You should NEVER have to make a manual change to this file!
+  E.g., changing a directory or something
+  - Instead, accept command line arguments
+    - This gets complicated, but it doesn't have to be
+    - Give an example of my sys.argv stuff
+** 5. Full example
+- Show the view:
+  Expt                   Analysis
+  (actual!)  -> Data  -> Analysis -> Meta-analysis -> Plot         -> Figures   -> Paper
+  Sim          (Neo)    (numpy, scipy)               (matplotlib)    (svgutil)    (LaTeX)
+  (Nengo)
+- Show the run.py script
+- Point people to Github page

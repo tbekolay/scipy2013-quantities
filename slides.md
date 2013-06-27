@@ -112,6 +112,71 @@ University of Waterloo <br>
 
 
 
+## Why?!
+
+* Making a quantities package is easy
+* Making a good quantities package is hard
+
+
+
+## Implementation
+
+Container
+```python
+class Quantity(object):
+    def __init__(self, magnitude, unit):
+        ...
+```
+Subclass
+```python
+class Quantity(numpy.ndarray):
+    def __new__(cls, ...):
+        ...
+```
+<aside class="notes" data-markdown>
+* To clarify about implementation,
+  this is what I mean
+* If you want pure speed and dimensional analysis
+  check out numericalunits
+  * Or check it out anyway, it's neat
+</aside>
+
+
+
+## Wrapping functions
+
+```python
+from scipy.optimize import fsolve
+
+CA0 = 1 * u.mol / u.L
+CA = 0.01 * u.mol / u.L
+k = 1.0 / u.s
+
+def func(t):
+    return CA - CA0 * np.exp(-k * t)
+
+tguess = 4 * u.s
+print fsolve(func, tguess)
+```
+
+
+```python
+from scipy.optimize import fsolve as _fsolve
+
+def fsolve(func, t0):
+    # units on initial guess, normalized
+    tU = t0 / float(t0)
+    def wrapped_func(t):
+        return float(func(t * tU))
+
+    sol, = _fsolve(wrapped_func, t0)
+    return sol * tU
+```
+
+<small>Thanks John! ([jkitchin.github.io/blog](http://jkitchin.github.io/blog/2013/03/22/Handling-units-with-the-quantities-module/))</small>
+
+
+
 <img src="img/standards.png" width="100%" class="border">
 <figcaption>[xkcd](http://xkcd.com/927/) on standards</figcaption>
 
@@ -119,6 +184,16 @@ University of Waterloo <br>
 * There are lots of use cases
   * This comic is maybe why there are so many packages
 * Let's avoid making our own for now
+</aside>
+
+
+
+<div id="facts"></div>
+
+<aside class="notes" data-markdown>
+* First, let's get to know these libraries
+* Take some of these things with a grain of salt,
+  but sometimes good to know
 </aside>
 
 
@@ -167,41 +242,6 @@ University of Waterloo <br>
 
 
 
-<div id="facts"></div>
-
-<aside class="notes" data-markdown>
-* First, let's get to know these libraries
-* Take some of these things with a grain of salt,
-  but sometimes good to know
-</aside>
-
-
-## Implementation details
-
-Subclass
-```python
-class Quantity(numpy.ndarray):
-    def __new__(cls, ...):
-        ...
-```
-Container
-```python
-class Quantity(object):
-    def __init__(self, magnitude, unit):
-        ...
-```
-Unique: `numericalunits` uses randomness to do dimensional analysis ([link](https://github.com/sbyrnes321/numericalunits))
-
-<aside class="notes" data-markdown>
-* To clarify about implementation,
-  this is what I mean
-* If you want pure speed and dimensional analysis
-  check out numericalunits
-  * Or check it out anyway, it's neat
-</aside>
-
-
-
 # Syntax
 
 
@@ -234,9 +274,6 @@ length = q.Quantity(np.ones((3, 3)),
                     units='meter')
 length = q.Quantity(np.ones((3, 3)),
                     units=q.units.meter)
-
-meter = q.Units('meter')
-length = meter(np.ones((3, 3)))
 ```
 
 
@@ -303,13 +340,20 @@ Binary ufuncs, different units
 
 
 
-## What should I use?
+## What should I use now?
 
-[<span data-icon="&#xe003;"></span> tbekolay/quantities-comparison](https://github.com/tbekolay/quantities-comparison)
+* For me, `quantities`
+* For you, please contribute to<br>[<span data-icon="&#xe003;"></span> tbekolay/quantities-comparison](https://github.com/tbekolay/quantities-comparison)
 
-* For my use case, `quantities`
-* For your use case, please contribute!
-  * Let's funnel development efforts to a few packages
+
+
+## Ideas
+
+1. Funnel development to one package
+  * Should be easy to wrap a function
+2. Make a fully wrapped version of NumPy
+  * `import numpy_quantities as np`
+3. Implement units support in NumPy
 
 ----
 

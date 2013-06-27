@@ -70,7 +70,7 @@ span.no:before {
 .reveal table {
   font-size: 65%;
   border-collapse: collapse;
-  margin-left: 10.0em;  /* for the static-col */
+  margin-left: 250px;  /* for the static table */
 }
 
 .reveal .table-container {
@@ -79,36 +79,30 @@ span.no:before {
   overflow-y:visible;
 }
 
-.reveal .static-col {
-  width: 10em;
+.reveal table.static {
   position: absolute;
   left: 0;
-  text-align: right;
+  margin-left: 0;
 }
+
+.reveal table.static td { text-align: right; }
+
+.reveal table.static th { color: #f0f1eb; }
 
 .reveal table th {
   text-align: center;
   border-bottom: 5px solid #ccc;
   padding: 0em .3em;
   background: #f0f1eb;
+  white-space: nowrap;
 }
-
-.reveal table th.static-col {
-  opacity: 0;
-}
-
 
 .reveal table td {
   background: #f0f1eb;
-  border-bottom: 1px solid #ccc;
-  border-top-width: 0px;
+  border-top: 1px solid #ccc;
   text-align: center;
 }
 
-.reveal table tbody tr:hover td {
-  background-color: #dfdfdf
-}
+.reveal table tbody tr:hover td { background-color: #dfdfdf; }
 
-#speed svg {
-  font-size: 50%;
-}
+#speed svg { font-size: 50%; }

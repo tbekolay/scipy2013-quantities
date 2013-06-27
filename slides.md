@@ -1,6 +1,6 @@
 ## A comprehensive look at representing physical quantities in Python
 
-![](/img/scipy.png)
+![](img/scipy.png)
 
 Trevor Bekolay <br>
 University of Waterloo <br>
@@ -190,7 +190,7 @@ class Quantity(object):
     def __init__(self, magnitude, unit):
         ...
 ```
-Unique: `numericalunits` uses random scaling factors ([link](https://github.com/sbyrnes321/numericalunits))
+Unique: `numericalunits` uses randomness to do dimensional analysis ([link](https://github.com/sbyrnes321/numericalunits))
 
 <aside class="notes" data-markdown>
 * To clarify about implementation,
@@ -215,27 +215,6 @@ length = 5.0 * q.meter
 ```python
 length = q.Quantity(5.0, units='meter')
 length = q.Quantity(5.0, units=q.meter)
-```
-3. Constructor for each unit subclass
-```python
-meter = q.Units('meter')
-length = meter(5.0)
-```
-
-
-## Converting a quantity
-
-1. Change units property <span data-icon="&#xe007;" class="fragment"></span>
-```python
-length.units = q.foot
-```
-2. Call method that modifies the quantity
-```python
-length.to(q.foot)
-```
-3. Call method that returns a new quantity with the new unit
-```python
-length = length.convert(q.inch)
 ```
 
 
@@ -271,29 +250,21 @@ length = meter(np.ones((3, 3)))
   * `length` and `other_length` have same units
   * `length` and `other_length` have compatible units
   * `length` and `other_length` have different units
-* Inplace (e.g., `length /= other_length`)
-  * Same, compatible, different
 
 
 <div id="compatibility-unary_ops" class="table-container"></div>
 
 
 <div id="compatibility-binary_same_ops" class="table-container"></div>
+Binary operators, same units
 
 
 <div id="compatibility-binary_compatible_ops" class="table-container"></div>
+Binary operators, compatible units
 
 
 <div id="compatibility-binary_different_ops" class="table-container"></div>
-
-
-<div id="compatibility-inplace_same_ops" class="table-container"></div>
-
-
-<div id="compatibility-inplace_compatible_ops" class="table-container"></div>
-
-
-<div id="compatibility-inplace_different_ops" class="table-container"></div>
+Binary operators, different units
 
 
 ## NumPy ufuncs
@@ -307,12 +278,15 @@ length = meter(np.ones((3, 3)))
 
 
 <div id="compatibility-binary_same_ufuncs" class="table-container"></div>
+Binary ufuncs, same units
 
 
 <div id="compatibility-binary_compatible_ufuncs" class="table-container"></div>
+Binary ufuncs, compatible units
 
 
 <div id="compatibility-binary_different_ufuncs" class="table-container"></div>
+Binary ufuncs, different units
 
 
 ## Other NumPy functions

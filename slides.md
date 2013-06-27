@@ -343,7 +343,8 @@ Binary ufuncs, different units
 ## What should I use now?
 
 * For me, `quantities`
-* For you, please contribute to<br>[<span data-icon="&#xe003;"></span> tbekolay/quantities-comparison](https://github.com/tbekolay/quantities-comparison)
+
+[<span data-icon="&#xe003;"></span> tbekolay/quantities-comparison](https://github.com/tbekolay/quantities-comparison)
 
 
 

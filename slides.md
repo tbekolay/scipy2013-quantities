@@ -302,7 +302,7 @@ Binary operators, compatible units
 
 <div id="compatibility-binary_different_ops" class="table-container"></div>
 Binary operators, different units
-
+<!--
 
 ## NumPy ufuncs
 
@@ -330,6 +330,7 @@ Binary ufuncs, different units
 
 
 <div id="compatibility-other_numpy" class="table-container"></div>
+-->
 
 
 

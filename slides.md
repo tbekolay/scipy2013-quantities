@@ -302,35 +302,6 @@ Binary operators, compatible units
 
 <div id="compatibility-binary_different_ops" class="table-container"></div>
 Binary operators, different units
-<!--
-
-## NumPy ufuncs
-
-* Unary (e.g., `numpy.ceil(length)`)
-* Binary (e.g., `numpy.maximum(length, other_length`)
-  * Same, compatible, different
-
-
-<div id="compatibility-unary_ufuncs" class="table-container"></div>
-
-
-<div id="compatibility-binary_same_ufuncs" class="table-container"></div>
-Binary ufuncs, same units
-
-
-<div id="compatibility-binary_compatible_ufuncs" class="table-container"></div>
-Binary ufuncs, compatible units
-
-
-<div id="compatibility-binary_different_ufuncs" class="table-container"></div>
-Binary ufuncs, different units
-
-
-## Other NumPy functions
-
-
-<div id="compatibility-other_numpy" class="table-container"></div>
--->
 
 
 
